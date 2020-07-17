@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cham.api.voyages.model.Destination;
 import com.cham.api.voyages.repo.DestinationRepository;
 
-// @CrossOrigin(origins = "*", allowedHeaders = "*")
+// @CrossOrigin(origins = "*", allowedHeaders = "*") -> autorise les connexions
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
@@ -77,12 +77,6 @@ public class DestinationController {
         System.out.println("Selected destination by title: " + title);
         return repository2.findByTitle(title);
     }
-
-//    @GetMapping(value = "/destinations/article/{article}")
-//    public List<Destination> findByArticle(@PathVariable String article) {
-//        System.out.println("Selected destination by searched words : " + article);
-//        return repository2.findByArticle(article);
-//    }
 
     @GetMapping(value = "/destinations/article/{article}")
     public ArrayList<Destination> findByArticle(@PathVariable String article) {
