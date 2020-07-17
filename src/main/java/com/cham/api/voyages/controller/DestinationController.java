@@ -80,7 +80,7 @@ public class DestinationController {
 
     @GetMapping(value = "/destinations/article/{article}")
     public ArrayList<Destination> findByArticle(@PathVariable String article) {
-        System.out.println("Selected destination by searched words : " + article);
+        System.out.println("Selected destination by searched word : " + article);
         ArrayList<Destination> result =new ArrayList<>();
         for (Destination dest : this.getAllDestinations()) {
             if (dest.getArticle().toLowerCase().contains(article)) {
@@ -96,8 +96,7 @@ public class DestinationController {
         return "Authenticated successfully" ;
     }
 
-/*
-    @PutMapping("/customers/{id}")
+/*  @PutMapping("/customers/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
         System.out.println("Update Customer with ID = " + id + "...");
 
