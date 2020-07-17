@@ -14,6 +14,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/http://localhost:4200").fullyAuthenticated().and
                 ().httpBasic();
+        // Autoriser les requêtes CORS afin d'éviter les échecs répertoriés dans la console du navigateur
+        http.headers().frameOptions().disable();
     }
 
     @Override

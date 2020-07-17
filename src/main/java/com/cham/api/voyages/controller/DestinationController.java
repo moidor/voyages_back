@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cham.api.voyages.model.Destination;
 import com.cham.api.voyages.repo.DestinationRepository;
-// import sun.security.krb5.internal.crypto.Des;
-// import sun.security.krb5.internal.crypto.Des;
 
+// @CrossOrigin(origins = "*", allowedHeaders = "*")
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
@@ -44,14 +43,12 @@ public class DestinationController {
     @PostMapping(value = "/destinations")
     public Destination postDestination(@RequestBody Destination destination) {
 
-        Destination _destination =
-                repository.save(new Destination(
-                        destination.getTitle(),
-                        destination.getArticle(),
-                        destination.getYear(),
-                        destination.getImage(),
-                        destination.getCurrency()));
-        return _destination;
+        return repository.save(new Destination(
+                destination.getTitle(),
+                destination.getArticle(),
+                destination.getYear(),
+                destination.getImage(),
+                destination.getCurrency()));
     }
 
     @DeleteMapping("/destinations/{id}")
@@ -71,15 +68,32 @@ public class DestinationController {
     @GetMapping(value = "/destinations/year/{year}")
     public List<Destination> findByYear(@PathVariable int year) {
         System.out.println("Selected article in " + year);
-        List<Destination> destinations = repository.findByYear(year);
-        return destinations;
+        return repository.findByYear(year);
     }
 
+    // Les méthodes commençant par "findBy" doivent contenir le même nom après que celui du paramètre
     @GetMapping(value = "/destinations/title/{title}")
     public List<Destination> findByTitle(@PathVariable String title) {
-        System.out.println("Selected article by title: " + title);
-        List<Destination> destinations = repository2.findByTitle(title);
-        return destinations;
+        System.out.println("Selected destination by title: " + title);
+        return repository2.findByTitle(title);
+    }
+
+//    @GetMapping(value = "/destinations/article/{article}")
+//    public List<Destination> findByArticle(@PathVariable String article) {
+//        System.out.println("Selected destination by searched words : " + article);
+//        return repository2.findByArticle(article);
+//    }
+
+    @GetMapping(value = "/destinations/article/{article}")
+    public ArrayList<Destination> findByArticle(@PathVariable String article) {
+        System.out.println("Selected destination by searched words : " + article);
+        ArrayList<Destination> result =new ArrayList<>();
+        for (Destination dest : this.getAllDestinations()) {
+            if (dest.getArticle().toLowerCase().contains(article)) {
+                result.add(dest);
+            }
+        }
+        return result;
     }
 
     @GetMapping("/destinations/login")
